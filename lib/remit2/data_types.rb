@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'relax'
 
-require 'remit/common'
+require 'remit2/common'
 
 module Remit
   class Amount < BaseResponse
@@ -96,6 +96,11 @@ module Remit
         self.status == Remit::TransactionStatus.const_get(status_name.sub('_', '').upcase)
       end
     end
+  end
+  
+  class RefundResult < BaseResponse
+    parameter :transaction_id
+    parameter :transaction_status
   end
 
   class TransactionStatus

@@ -28,7 +28,7 @@ The following example shows how to load up the API, initialize the service, and
 make a simple call to get the tokens stored on the account:
 
     gem 'remit'
-    require 'remit'
+    require 'remit2'
 
     ACCESS_KEY = '<your AWS access key>'
     SECRET_KEY = '<your AWS secret key>'

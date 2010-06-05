@@ -1,4 +1,4 @@
-require 'remit/common'
+require 'remit2/common'
 
 # This operation is used by Amazon Simple Pay.
 module Remit

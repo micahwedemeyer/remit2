@@ -1,4 +1,4 @@
-require 'remit/common'
+require 'remit2/common'
 
 module Remit
   module GetAccountBalance

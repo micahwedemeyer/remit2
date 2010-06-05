@@ -1,8 +1,8 @@
 require 'erb'
 require 'cgi'
 
-require 'remit/common'
-require 'remit/signature'
+require 'remit2/common'
+require 'remit2/signature'
 
 module Remit
   module GetPipeline

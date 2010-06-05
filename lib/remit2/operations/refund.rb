@@ -1,22 +1,15 @@
-require 'remit/common'
+require 'remit2/common'
 
+# Updated for API Version 2008-09-17
 module Remit
   module Refund
     class Request < Remit::Request
       action :Refund
       parameter :caller_description
       parameter :caller_reference, :required => true
-      parameter :caller_token_id, :required => true
-      parameter :charge_fee_to, :required => true
-      parameter :meta_data
       parameter :refund_amount, :type => Remit::RequestTypes::Amount
-      parameter :refund_recipient_description
-      parameter :refund_recipient_reference
-      parameter :refund_sender_description
-      parameter :refund_sender_reference
-      parameter :refund_sender_token_id, :required => true
-      parameter :transaction_date
       parameter :transaction_id, :required => true
+      parameter :marketplace_refund_policy
 
       # The RefundAmount parameter has multiple components.  It is specified on the query string like
       # so: RefundAmount.Amount=XXX&RefundAmount.CurrencyCode=YYY
@@ -27,7 +20,7 @@ module Remit
 
     class Response < Remit::Response
       parser :rexml
-      parameter :transaction_response, :namespace => 'ns3', :type => TransactionResponse
+      parameter :refund_result, :type => RefundResult
     end
 
     def refund(request = Request.new)
