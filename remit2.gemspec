@@ -49,7 +49,6 @@ Gem::Specification.new do |s|
      "lib/remit2/operations/settle_debt.rb",
      "lib/remit2/operations/subscribe_for_caller_notification.rb",
      "lib/remit2/operations/unsubscribe_for_caller_notification.rb",
-     "lib/remit2/operations/verify_signature.rb",
      "lib/remit2/operations/write_off_debt.rb",
      "lib/remit2/pipeline_response.rb",
      "lib/remit2/signature.rb"
