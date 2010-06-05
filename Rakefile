@@ -9,12 +9,12 @@ begin
   require 'jeweler'
 
   Jeweler::Tasks.new do |gem|
-    gem.name = 'remit'
+    gem.name = 'remit2'
     gem.summary = 'An API for using the Amazon Flexible Payment Service (FPS) - updated for version 2008-09-17 of the API.'
     gem.email = 'micah@peachshake.com'
     gem.homepage = 'http://github.com/micahwedemeyer/remit2'
     gem.authors = ['Micah Wedemeyer', 'Tyler Hunt']
-    gem.rubyforge_project = 'remit'
+    gem.rubyforge_project = 'remit2'
     gem.platform           = Gem::Platform::RUBY
     gem.files              = FileList['{bin,lib}/**/*'].to_a
     gem.require_path       = 'lib'
