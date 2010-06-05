@@ -143,7 +143,7 @@ module Remit
 
   module RequestTypes
     class Amount < Remit::Request
-      parameter :amount
+      parameter :value
       parameter :currency_code
     end
 
