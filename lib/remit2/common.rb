@@ -63,8 +63,7 @@ module Remit
     end
     
     # Easily exposes parameters that are buried in the InnerResponse
-    def self.inner_parameters(fields)
-      fields = [fields] unless fields.is_a?(Array)
+    def self.inner_parameters(*fields)
       fields.each do |inner_field_name|
         define_method(inner_field_name) { inner.send(inner_field_name) }
       end
