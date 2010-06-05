@@ -1,3 +1,9 @@
+0.0.6 - June 5, 2010
+
+* Namechange to Remit2
+* Switch to API Version 2008-09-17
+* Switch to Signature Version 2
+
 0.0.5 - January 11, 2010
 
 * Added support to pipelines for shipping information (Jeff Seibert)
