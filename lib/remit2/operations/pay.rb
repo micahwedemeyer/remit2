@@ -18,7 +18,6 @@ module Remit
       parameter :sender_description
       parameter :sender_reference
       parameter :sender_token_id, :required => true
-      parameter :temporary_decline_policy, :type => Remit::RequestTypes::TemporaryDeclinePolicy
       parameter :transaction_amount, :type => Remit::RequestTypes::Amount, :required => true
       parameter :transaction_date
       parameter :transaction_timeout_in_mins
