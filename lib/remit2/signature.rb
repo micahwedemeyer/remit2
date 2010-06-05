@@ -19,7 +19,7 @@ module Remit
       host = uri.host.downcase
       
       # Explicitly remove the Signature param if found
-      sorted_keys = values.keys.reject{ |k| k.to_s == "Signature" }.sort { |x,y| x.to_s.downcase <=> y.to_s.downcase }
+      sorted_keys = values.keys.reject{ |k| k.to_s == "Signature" }.sort { |x,y| x.to_s <=> y.to_s }
       converted = sorted_keys.collect do |k|
         v = values[k]
         s = urlencode(k)
