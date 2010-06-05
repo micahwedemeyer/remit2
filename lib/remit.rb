@@ -1,8 +1,8 @@
 $:.unshift(File.dirname(__FILE__)) unless $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
+require 'uri'
 require 'openssl'
 require 'net/https'
-require 'uri'
 require 'date'
 require 'base64'
 require 'erb'
@@ -18,6 +18,7 @@ require 'remit/error_codes'
 require 'remit/ipn_request'
 require 'remit/get_pipeline'
 require 'remit/pipeline_response'
+require 'remit/signature'
 
 require 'remit/operations/cancel_subscription_and_refund'
 require 'remit/operations/cancel_token'
@@ -50,6 +51,8 @@ require 'remit/operations/write_off_debt'
 
 module Remit
   class API < Relax::Service
+    include Signature
+    
     include CancelSubscriptionAndRefund
     include CancelToken
     include DiscardResults
@@ -80,12 +83,13 @@ module Remit
     include UnsubscribeForCallerNotification
     include WriteOffDebt
 
-    API_ENDPOINT = 'https://fps.amazonaws.com/'.freeze
-    API_SANDBOX_ENDPOINT = 'https://fps.sandbox.amazonaws.com/'.freeze
-    PIPELINE_URL = 'https://authorize.payments.amazon.com/cobranded-ui/actions/start'.freeze
-    PIPELINE_SANDBOX_URL = 'https://authorize.payments-sandbox.amazon.com/cobranded-ui/actions/start'.freeze
-    API_VERSION = Date.new(2007, 1, 8).to_s.freeze
-    SIGNATURE_VERSION = 1.freeze
+    API_ENDPOINT = 'https://fps.amazonaws.com/'
+    API_SANDBOX_ENDPOINT = 'https://fps.sandbox.amazonaws.com/'
+    PIPELINE_URL = 'https://authorize.payments.amazon.com/cobranded-ui/actions/start'
+    PIPELINE_SANDBOX_URL = 'https://authorize.payments-sandbox.amazon.com/cobranded-ui/actions/start'
+    API_VERSION = "2008-09-17"
+    SIGNATURE_VERSION = 2
+    SIGNATURE_METHOD = "HmacSHA256"
 
     attr_reader :access_key
     attr_reader :secret_key
@@ -99,37 +103,20 @@ module Remit
       super(sandbox ? API_SANDBOX_ENDPOINT : API_ENDPOINT)
     end
 
-    def new_query(query={})
-      SignedQuery.new(@endpoint, @secret_key, query)
-    end
-    private :new_query
-
     def default_query
-      new_query({
+      Relax::Query.new({
         :AWSAccessKeyId => @access_key,
         :SignatureVersion => SIGNATURE_VERSION,
+        :SignatureMethod => SIGNATURE_METHOD,
         :Version => API_VERSION,
         :Timestamp => Time.now.utc.strftime('%Y-%m-%dT%H:%M:%SZ')
       })
     end
-    private :default_query
 
     def query(request)
       query = super
-      query[:Signature] = sign(query)
+      query[:Signature] = sign(@secret_key, @endpoint, "GET", query)
       query
     end
-    private :query
-
-    def sign(values)
-      keys = values.keys.sort { |a, b| a.to_s.downcase <=> b.to_s.downcase }
-
-      signature = keys.inject('') do |signature, key|
-        signature += key.to_s + values[key].to_s
-      end
-
-      Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::SHA1.new, @secret_key, signature)).strip
-    end
-    private :sign
   end
 end

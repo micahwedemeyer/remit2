@@ -1,10 +1,14 @@
 require 'erb'
+require 'cgi'
 
 require 'remit/common'
+require 'remit/signature'
 
 module Remit
   module GetPipeline
     class Pipeline
+      include Signature
+      
       @parameters = []
       attr_reader :parameters
       
@@ -56,7 +60,12 @@ module Remit
       def url
         uri = URI.parse(@api.pipeline_url)
         
-        query = {}
+        query = {
+          "signatureVersion" => "2",
+          "signatureMethod" => "HmacSHA256",
+          "version" => "2009-01-09"
+        }
+        
         self.class.parameters.each do |p|
           val = self.send(p)
           
@@ -68,8 +77,10 @@ module Remit
 
         # Remove any unused optional parameters
         query.reject! { |key, value| value.nil? || (value.is_a?(String) && value.empty?) }
-
-        uri.query = SignedQuery.new(@api.pipeline_url, @api.secret_key, query).to_s
+        
+        signature = sign(@api.secret_key, @api.pipeline_url, "GET", query)
+        uri.query = query.merge('signature' => signature).collect {|k,v| "#{CGI::escape(k.to_s)}=#{CGI::escape(v.to_s)}"}.join("&")
+        
         uri.to_s
       end
     end

@@ -54,35 +54,4 @@ module Remit
       }.join('/'), namespace)
     end
   end
-
-  class SignedQuery < Relax::Query
-    def initialize(uri, secret_key, query={})
-      super(query)
-      @uri = URI.parse(uri.to_s)
-      @secret_key = secret_key
-    end
-
-    def sign
-      delete(:awsSignature)
-      store(:awsSignature, Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::SHA1.new, @secret_key, "#{@uri.path}?#{to_s(false)}".gsub('%20', '+'))).strip)
-    end
-
-    def to_s(signed=true)
-      sign if signed
-      super()
-    end
-
-    class << self
-      def parse(uri, secret_key, query_string)
-        query = self.new(uri, secret_key)
-
-        query_string.split('&').each do |parameter|
-          key, value = parameter.split('=', 2)
-          query[key] = unescape_value(value)
-        end
-
-        query
-      end
-    end
-  end
 end

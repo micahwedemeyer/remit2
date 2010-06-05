@@ -10,10 +10,10 @@ begin
 
   Jeweler::Tasks.new do |gem|
     gem.name = 'remit'
-    gem.summary = 'An API for using the Amazon Flexible Payment Service (FPS).'
-    gem.email = 'tyler@tylerhunt.com'
-    gem.homepage = 'http://github.com/tylerhunt/remit'
-    gem.authors = ['Tyler Hunt']
+    gem.summary = 'An API for using the Amazon Flexible Payment Service (FPS) - updated for version 2008-09-17 of the API.'
+    gem.email = 'micah@peachshake.com'
+    gem.homepage = 'http://github.com/micahwedemeyer/remit2'
+    gem.authors = ['Micah Wedemeyer', 'Tyler Hunt']
     gem.rubyforge_project = 'remit'
     gem.platform           = Gem::Platform::RUBY
     gem.files              = FileList['{bin,lib}/**/*'].to_a
@@ -25,7 +25,7 @@ begin
     gem.add_dependency('relax', '~> 0.0.7')
   end
 rescue LoadError
-  puts 'Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com'
+  puts 'Jeweler not available. Install it with: gem install jeweler'
 end
 
 task :spec do
@@ -35,7 +35,7 @@ end
 namespace :spec do
   desc "Run unit specs."
   Spec::Rake::SpecTask.new(:units) do |t|
-    t.spec_opts   = ['--colour --format progress --loadby mtime --reverse']
+    t.spec_opts   = ['--colour --format progress --loadby mtime --reverse --backtrace']
     t.spec_files  = FileList['spec/units/**/*_spec.rb']
   end
 

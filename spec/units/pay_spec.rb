@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/units_helper'
 
-describe "the Pay API" do
+describe "the Pay API" do  
   describe "a successful response" do
     it_should_behave_like 'a successful response'
 

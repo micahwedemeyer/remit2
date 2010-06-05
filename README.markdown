@@ -1,14 +1,16 @@
-Remit
-=====
+Remit2
+======
 
-This API provides access to the Amazon Flexible Payment Service (FPS). After
-trying to get the SOAP version of the API written, I began working on this REST
-version to provide a cohesive means of access to all of the functionality of
-the FPS without having to get dirty dealing with SOAP requests.
+This API provides access to the Amazon Flexible Payment Service (FPS), using the
+2008-09-17 version of the API and Signature Version 2.
 
-I hope you enjoy using it as much as I've enjoyed writing it. I'm interested to
-hear what sort of uses you find for it. If you find any bugs, let me know (or
-better yet, submit a patch).
+It is based heavily on the original Remit library written by Tyler Hunt, which was
+built for the 2007-08-01 FPS API version and Signature Version 1.
+
+**WARNING** - This gem should be considered very volatile and incomplete. I (Micah)
+am not looking to write a full wrapper around the FPS API. My only goal is to get it
+working for my needs. Therefore, many of the functions/API calls will be broken.
+Patches are welcome if you want to make additions.
 
 
 Sandbox
@@ -86,6 +88,7 @@ The following production sites are currently using Remit:
 
   * http://www.storenvy.com/
   * http://www.obsidianportal.com/
+  * http://www.doleaf.com
 
 
 Copyright (c) 2007-2009 Tyler Hunt, released under the MIT license
