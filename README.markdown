@@ -4,91 +4,23 @@ Remit2
 This API provides access to the Amazon Flexible Payment Service (FPS), using the
 2008-09-17 version of the API and Signature Version 2.
 
-It is based heavily on the original Remit library written by Tyler Hunt, which was
-built for the 2007-08-01 FPS API version and Signature Version 1.
+Remit2 is forked from the original Remit library written by Tyler Hunt, which was
+built for the 2007-08-01 FPS API version and Signature Version 1. Due to serious
+incompatibilities between the two API versions, I decided to fork the library
+and give up backward compatibility with the older API version.
+
+Working with Remit2 should very closely resemble working with Remit, with the exception
+of the changed API parameter and function names. However, due to these same changes, it's
+almost never the case that Remit2 can be dropped in place of Remit without some changes
+to the client code. For example, the *Amount* parameter in the *Pay* operation has
+changed, and nearly every FPS client application will need to use *Pay*.
 
 **WARNING** - This gem should be considered very volatile and incomplete. I (Micah)
 am not looking to write a full wrapper around the FPS API. My only goal is to get it
 working for my needs. Therefore, many of the functions/API calls will be broken.
 Patches are welcome if you want to make additions.
 
+I have explicitly marked some files as "# Updated for API Version 2008-09-17". If
+you don't see this near the top of the file, assume that it doesn't work!
 
-Sandbox
--------
-
-Amazon provides a testing environment for the FPS called a sandbox. You may
-(and should) use the sandbox while testing your application. It can be enabled
-by passing a value of true to the last argument of the API constructor.
-
-
-Getting Started
----------------
-
-The following example shows how to load up the API, initialize the service, and
-make a simple call to get the tokens stored on the account:
-
-    gem 'remit'
-    require 'remit2'
-
-    ACCESS_KEY = '<your AWS access key>'
-    SECRET_KEY = '<your AWS secret key>'
-
-    # connect using the API's sandbox mode
-    remit = Remit::API.new(ACCESS_KEY, SECRET_KEY, true)
-
-    response = remit.get_tokens
-    puts response.tokens.first.token_id
-
-
-Using with Rails
-----------------
-
-To use Remit in a Rails application, you must first specify a dependency on the
-Remit gem in your config/environment.rb file:
-
-    config.gem 'remit', :version => '~> 0.0.1'
-
-Then you should create an initializer to configure your Amazon keys. Create the
-file config/initializers/remit.rb with the following contents:
-
-    config_file = File.join(Rails.root, 'config', 'amazon_fps.yml')
-    config = YAML.load_file(config_file)[RAILS_ENV].symbolize_keys
-
-    FPS_ACCESS_KEY = config[:access_key]
-    FPS_SECRET_KEY = config[:secret_key]
-
-Then create the YAML file config/amazon_fps.yml:
-
-    development: &sandbox
-      access_key: <your sandbox access key>
-      secret_key: <your sandbox secret key>
-
-    test:
-      <<: *sandbox
-    
-    production:
-      access_key: <your access key>
-      secret_key: <your secret key>
-
-To instantiate and use the Remit API in your application, you could define a
-method in your ApplicationController like this:
-
-    def remit
-      @remit ||= begin
-        sandbox = !Rails.env.production?
-        Remit::API.new(FPS_ACCESS_KEY, FPS_SECRET_KEY, sandbox)
-      end
-    end
-
-
-Sites Using Remit
------------------
-
-The following production sites are currently using Remit:
-
-  * http://www.storenvy.com/
-  * http://www.obsidianportal.com/
-  * http://www.doleaf.com
-
-
-Copyright (c) 2007-2009 Tyler Hunt, released under the MIT license
+Copyright (c) 2010 Micah Wedemeyer, released under the MIT license
