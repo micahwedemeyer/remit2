@@ -1,8 +1,3 @@
-require 'rubygems'
-require 'relax'
-
-require 'remit2/common'
-
 module Remit
   class Amount < BaseResponse
     parameter :currency_code
@@ -41,23 +36,6 @@ module Remit
     CREDIT_CARD = 'credit card'
     PREPAID = 'prepaid'
     DEBT = 'Debt'
-  end
-
-  class ServiceError < BaseResponse
-    parameter :error_type
-    parameter :is_retriable
-    parameter :error_code
-    parameter :reason_text
-
-    class ErrorType
-      SYSTEM = 'System'
-      BUSINESS = 'Business'
-    end
-  end
-
-  class ResponseStatus
-    SUCCESS = 'Success'
-    FAILURE = 'Failure'
   end
 
   class Token < BaseResponse

@@ -1,5 +1,3 @@
-require 'remit2/common'
-
 # Updated for API Version 2008-09-17
 module Remit
   module Pay

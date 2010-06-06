@@ -1,9 +1,3 @@
-require 'erb'
-require 'cgi'
-
-require 'remit2/common'
-require 'remit2/signature'
-
 # Updated for API Version 2008-09-17
 module Remit
   module GetPipeline

@@ -1,7 +1,3 @@
-require 'uri'
-require 'base64'
-require 'openssl'
-
 module Remit
   module Signature
     def sign(secret_key, endpoint, http_verb, params)

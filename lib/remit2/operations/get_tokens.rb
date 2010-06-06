@@ -1,5 +1,3 @@
-require 'remit2/common'
-
 module Remit
   module GetTokens
     class Request < Remit::Request

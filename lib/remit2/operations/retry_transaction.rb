@@ -1,5 +1,3 @@
-require 'remit2/common'
-
 module Remit
   module RetryTransaction
     class Request < Remit::Request

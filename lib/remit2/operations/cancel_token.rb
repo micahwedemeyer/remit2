@@ -1,5 +1,3 @@
-require 'remit2/common'
-
 module Remit
   module CancelToken
     class Request < Remit::Request

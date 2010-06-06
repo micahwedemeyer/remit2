@@ -2,23 +2,26 @@ $:.unshift(File.dirname(__FILE__)) unless $:.include?(File.dirname(__FILE__)) ||
 
 require 'uri'
 require 'openssl'
+require 'openssl/digest'
 require 'net/https'
 require 'date'
 require 'base64'
 require 'erb'
+require 'cgi'
 
 require 'rubygems'
 
 gem 'relax', '0.0.7'
 require 'relax'
 
-require 'remit2/common'
+require 'remit2/signature'
+require 'remit2/request'
+require 'remit2/response'
 require 'remit2/data_types'
 require 'remit2/error_codes'
 require 'remit2/ipn_request'
 require 'remit2/get_pipeline'
 require 'remit2/pipeline_response'
-require 'remit2/signature'
 
 require 'remit2/operations/cancel_subscription_and_refund'
 require 'remit2/operations/cancel_token'

@@ -1,22 +1,4 @@
-require 'base64'
-require 'erb'
-require 'uri'
-
-require 'rubygems'
-require 'relax'
-
 module Remit
-  class Request < Relax::Request
-    def self.action(name)
-      parameter :action, :value => name
-    end
-
-    def convert_key(key)
-      key.to_s.gsub(/(^|_)(.)/) { $2.upcase }.to_sym
-    end
-    protected :convert_key
-  end
-
   class BaseResponse < Relax::Response
     def node_name(name, namespace=nil)
       super(name.to_s.gsub(/(^|_)(.)/) { $2.upcase }, namespace)
@@ -39,12 +21,6 @@ module Remit
         @errors = elements('Errors/Error').collect do |error|
           Error.new(error)
         end
-      else
-        # Do they still have ServiceErrors in the API Version 2008-09-17????
-        @status = text_value(element(:Status))
-        @errors = elements('Errors/Error').collect do |error|
-          ServiceError.new(error)
-        end unless successful?
       end
     end
 
@@ -53,7 +29,13 @@ module Remit
     end
     
     def request_id
-      response_metadata ? response_metadata.request_id : nil
+      # If successful it's in the ResponseMetadata, if failure, it's in the base
+      # response. Very irritating.
+      if successful?
+        response_metadata.request_id
+      else
+        elements('RequestId')[0].to_s
+      end
     end
 
     def node_name(name, namespace=nil)

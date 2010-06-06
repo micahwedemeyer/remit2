@@ -1,11 +1,7 @@
-require 'base64'
-require 'openssl/digest'
-
 module Remit
   # Encapsulates the logic for IPN request validation and attribute retrieval.
   #
-  # Note: if your responses from Amazon are not validating, please pass the
-  # :version parameter to your original CBUI request.
+  # This should probably be updated to support the VerifySignature function now provided.
   class IpnRequest
     # Signature key name used by AmazonFPS IPNs
     SIGNATURE_KEY = 'signature'

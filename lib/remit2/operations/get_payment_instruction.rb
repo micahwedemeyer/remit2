@@ -1,5 +1,3 @@
-require 'remit2/common'
-
 module Remit
   module GetPaymentInstruction
     class Request < Remit::Request
