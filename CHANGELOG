@@ -1,3 +1,9 @@
+0.0.7 - June 6, 2010
+
+* Update several more functions to API Version 2008-09-17
+* Got specs passing again
+* Refactor and cleanup
+
 0.0.6 - June 5, 2010
 
 * Namechange to Remit2
