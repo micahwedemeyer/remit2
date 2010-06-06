@@ -1,5 +1,3 @@
-$:.unshift(File.dirname(__FILE__)) unless $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
-
 require 'uri'
 require 'openssl'
 require 'openssl/digest'
@@ -48,8 +46,6 @@ require 'remit2/operations/reserve'
 require 'remit2/operations/retry_transaction'
 require 'remit2/operations/settle'
 require 'remit2/operations/settle_debt'
-require 'remit2/operations/subscribe_for_caller_notification'
-require 'remit2/operations/unsubscribe_for_caller_notification'
 require 'remit2/operations/write_off_debt'
 
 module Remit
@@ -82,8 +78,6 @@ module Remit
     include RetryTransaction
     include Settle
     include SettleDebt
-    include SubscribeForCallerNotification
-    include UnsubscribeForCallerNotification
     include WriteOffDebt
 
     API_ENDPOINT = 'https://fps.amazonaws.com/'
