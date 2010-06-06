@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Micah Wedemeyer", "Tyler Hunt"]
-  s.date = %q{2010-06-05}
+  s.date = %q{2010-06-06}
   s.email = %q{micah@peachshake.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "lib/remit2.rb",
-     "lib/remit2/common.rb",
      "lib/remit2/data_types.rb",
      "lib/remit2/error_codes.rb",
      "lib/remit2/get_pipeline.rb",
@@ -47,10 +46,10 @@ Gem::Specification.new do |s|
      "lib/remit2/operations/retry_transaction.rb",
      "lib/remit2/operations/settle.rb",
      "lib/remit2/operations/settle_debt.rb",
-     "lib/remit2/operations/subscribe_for_caller_notification.rb",
-     "lib/remit2/operations/unsubscribe_for_caller_notification.rb",
      "lib/remit2/operations/write_off_debt.rb",
      "lib/remit2/pipeline_response.rb",
+     "lib/remit2/request.rb",
+     "lib/remit2/response.rb",
      "lib/remit2/signature.rb"
   ]
   s.homepage = %q{http://github.com/micahwedemeyer/remit2}
@@ -60,14 +59,11 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{An API for using the Amazon Flexible Payment Service (FPS) - updated for version 2008-09-17 of the API.}
   s.test_files = [
-    "spec/integrations/get_account_activity_spec.rb",
-     "spec/integrations/get_tokens_spec.rb",
+    "spec/units/cancel_subscription_and_refund_spec.rb",
      "spec/units/get_pipeline_spec.rb",
-     "spec/units/get_results_spec.rb",
      "spec/units/ipn_request_spec.rb",
      "spec/units/pay_spec.rb",
      "spec/units/remit_spec.rb",
-     "spec/integrations/integrations_helper.rb",
      "spec/spec_helper.rb",
      "spec/units/units_helper.rb"
   ]
