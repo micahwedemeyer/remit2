@@ -15,10 +15,15 @@ module Remit
         "#{convert_key(key).to_s}.#{convert_key(parameter).to_s}"
       end
     end
-
+    
+    class InnerResponse < Remit::BaseResponse
+      parameter :transaction_id
+      parameter :transaction_status
+    end
+    
     class Response < Remit::Response
-      parser :rexml
-      parameter :refund_result, :type => RefundResult
+      parameter :inner, :element => "RefundResult", :type => InnerResponse
+      inner_parameters :transaction_id, :transaction_status
     end
 
     def refund(request = Request.new)

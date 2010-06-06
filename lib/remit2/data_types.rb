@@ -76,9 +76,10 @@ module Remit
     end
   end
   
-  class RefundResult < BaseResponse
-    parameter :transaction_id
-    parameter :transaction_status
+  class MarketplaceRefundPolicy
+    MASTER_TRANSACTION_ONLY = "MasterTxnOnly"
+    MARKEPLACE_TRANSACTION_ONLY = "MarketplaceTxnOnly"
+    MASTER_AND_MARKETPLACE_TRANSACTION = "MasterAndMarketplaceTxn"
   end
 
   class TransactionStatus
