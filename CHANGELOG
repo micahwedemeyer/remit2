@@ -1,3 +1,12 @@
+0.0.10 - January 16, 2011
+
+* Added the from_rack_request helper for easy validating of Rack-based IPN requests
+
+0.0.9 - January 16, 2011
+
+* Updated IPN verification to use Signature v2
+* Added the VerifySignature method
+
 0.0.8 - June 6, 2010
 
 * Updated Refund to API Version 2008-09-17
