@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{remit2}
-  s.version = "0.0.8"
+  s.version = "0.0.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Micah Wedemeyer", "Tyler Hunt"]
-  s.date = %q{2010-06-06}
+  s.date = %q{2011-01-16}
   s.email = %q{micah@peachshake.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -46,6 +46,7 @@ Gem::Specification.new do |s|
      "lib/remit2/operations/retry_transaction.rb",
      "lib/remit2/operations/settle.rb",
      "lib/remit2/operations/settle_debt.rb",
+     "lib/remit2/operations/verify_signature.rb",
      "lib/remit2/operations/write_off_debt.rb",
      "lib/remit2/pipeline_response.rb",
      "lib/remit2/request.rb",

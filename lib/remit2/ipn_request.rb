@@ -3,21 +3,29 @@ module Remit
   #
   # This should probably be updated to support the VerifySignature function now provided.
   class IpnRequest
-    # Signature key name used by AmazonFPS IPNs
-    SIGNATURE_KEY = 'signature'
-
     # +params+ should be your controllers request parameters.
-    def initialize(params, secret_key)
+    # +url_endpoint+ should be the URL where you received the IPN
+    # +remit_api+ should be a Remit::API object, initialized with your credentials
+    def initialize(params, url_endpoint, remit_api)
       raise ArgumentError, "Expected the request params hash, received: #{params.inspect}" unless params.kind_of?(Hash)
       @params             = strip_keys_from(params, 'action', 'controller')
-      @supplied_signature = @params.delete(SIGNATURE_KEY)
-      @secret_key         = secret_key
+      @url_endpoint       = url_endpoint
+      @remit_api          = remit_api
     end
-
+    
     def valid?
-      return false unless @supplied_signature
-      generate_signature_for(@params) == @supplied_signature
+      resp = verify_signature
+      resp.successful? && resp.verification_status == "Success"
     end
+    
+    def verify_signature
+      req = Remit::VerifySignature::Request.new(
+        :url_end_point => @url_endpoint,
+        :http_parameters => @params.collect {|k,v| "#{k}=#{v}"}.join("&")
+      )
+      @remit_api.verify_signature(req)
+    end
+      
 
     def method_missing(method, *args) #:nodoc:
       if @params.has_key?(method.to_s)
@@ -26,20 +34,13 @@ module Remit
         super(method, *args)
       end
     end
-
-    def generate_signature_for(params)
-      query   = params.sort_by { |k,v| k.downcase }
-      digest  = OpenSSL::Digest::Digest.new('sha1')
-      hmac    = OpenSSL::HMAC.digest(digest, @secret_key, query.to_s)
-      encoded = Base64.encode64(hmac).chomp
-    end
-    private :generate_signature_for
-
+    
     def strip_keys_from(params, *ignore_keys)
       parsed = params.dup
       ignore_keys.each { |key| parsed.delete(key) }
       parsed
     end
     private :strip_keys_from
+    
   end
 end

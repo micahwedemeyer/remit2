@@ -46,6 +46,7 @@ require 'remit2/operations/reserve'
 require 'remit2/operations/retry_transaction'
 require 'remit2/operations/settle'
 require 'remit2/operations/settle_debt'
+require 'remit2/operations/verify_signature'
 require 'remit2/operations/write_off_debt'
 
 module Remit
@@ -78,6 +79,7 @@ module Remit
     include RetryTransaction
     include Settle
     include SettleDebt
+    include VerifySignature
     include WriteOffDebt
 
     API_ENDPOINT = 'https://fps.amazonaws.com/'
